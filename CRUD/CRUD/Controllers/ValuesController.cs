@@ -7,5 +7,10 @@ namespace CRUD.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        [HttpGet]
+        public string GetName()
+        {
+            return "Test";
+        }
     }
 }
