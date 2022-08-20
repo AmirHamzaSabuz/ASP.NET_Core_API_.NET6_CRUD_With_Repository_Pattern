@@ -7,10 +7,18 @@ namespace CRUD.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        [Route("ABCD")]
         [HttpGet]
         public string GetName()
         {
             return "Test";
+        }
+
+        [Route("GetFullName")]
+        [HttpGet]
+        public string GetFullName()
+        {
+            return "Md Rasel";
         }
     }
 }
