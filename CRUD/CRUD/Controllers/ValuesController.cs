@@ -3,18 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CRUD.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        [Route("[action]")]
+        
         [HttpGet]
         public string GetName()
         {
             return "Test";
         }
 
-        [Route("[action]")]
+        
         [HttpGet]
         public string GetFullName()
         {
