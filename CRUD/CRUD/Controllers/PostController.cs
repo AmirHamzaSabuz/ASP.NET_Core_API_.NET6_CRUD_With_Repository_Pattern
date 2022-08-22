@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CRUD.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class PostController : ControllerBase
     {
@@ -16,10 +16,23 @@ namespace CRUD.Controllers
         }
 
         [HttpGet]
-        public List<Post> GettAll() 
+        public List<Post> GettAll()
         {
             var posts = _applicationDbContext.Posts.ToList();
             return posts;
+        }
+
+        [HttpPost]
+        public Post Add(Post post)
+        { 
+            post.CreatedDate = DateTime.Now;
+            _applicationDbContext.Posts.Add(post);
+            bool isSaved = _applicationDbContext.SaveChanges() > 0;
+            if (isSaved)
+            {
+                return post;
+            }
+            return null;
         }
     }
 }
