@@ -10,6 +10,7 @@ namespace CRUD.Repository
     {
         public PostRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
         {
+
         }
     }
 }

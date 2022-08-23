@@ -11,6 +11,12 @@ namespace CRUD.Manager
     {
         public PostManager(ApplicationDbContext applicationDbContext) : base(new PostRepository(applicationDbContext))
         {
+
+        }
+
+        public Post GetById(int id)
+        {
+            return GetFirstOrDefault(p => p.Id == id);
         }
     }
 }
