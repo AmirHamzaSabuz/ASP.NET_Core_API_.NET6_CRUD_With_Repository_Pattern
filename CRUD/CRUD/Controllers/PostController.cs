@@ -1,4 +1,5 @@
 ﻿using CRUD.Context;
+using CRUD.Interfaces.Manager;
 using CRUD.Manager;
 using CRUD.Models;
 using Microsoft.AspNetCore.Http;
@@ -10,18 +11,15 @@ namespace CRUD.Controllers
     [ApiController]
     public class PostController : ControllerBase
     {
-        ApplicationDbContext _applicationDbContext;
-        PostManager _postManager;
-        public PostController(ApplicationDbContext applicationDbContext)
+        IPostManager _postManager;
+        public PostController(IPostManager postManager)
         {
-            _applicationDbContext = applicationDbContext;
-            _postManager = new PostManager(applicationDbContext);
+            _postManager = postManager;
         }
 
         [HttpGet]
         public List<Post> GettAll()
         {
-            //var posts = _applicationDbContext.Posts.ToList();
             var posts = _postManager.GetAll().ToList();
             return posts;
         }
@@ -30,8 +28,6 @@ namespace CRUD.Controllers
         public Post Add(Post post)
         { 
             post.CreatedDate = DateTime.Now;
-            //_applicationDbContext.Posts.Add(post);
-            //bool isSaved = _applicationDbContext.SaveChanges() > 0;
             bool isSaved = _postManager.Add(post);
             if (isSaved)
             {

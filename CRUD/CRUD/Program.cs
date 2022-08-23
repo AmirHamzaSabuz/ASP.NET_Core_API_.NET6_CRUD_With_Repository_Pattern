@@ -1,4 +1,6 @@
 using CRUD.Context;
+using CRUD.Interfaces.Manager;
+using CRUD.Manager;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddTransient<IPostManager, PostManager>(); // For every request it wwill make a new object
+//builder.Services.AddScoped<IPostManager, PostManager>(); // For one Controller one object
+//builder.Services.AddSingleton<IPostManager, PostManager>(); // One object for Whole Application
 
 var app = builder.Build();
 
