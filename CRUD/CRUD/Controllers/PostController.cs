@@ -42,5 +42,20 @@ namespace CRUD.Controllers
             }
             return null;
         }
+
+        [HttpPut]
+        public Post Edit(Post post)
+        {
+            if (post.Id == 0)
+            {
+                return null;
+            }
+            bool isUpdate = _postManager.Update(post);
+            if (isUpdate)
+            {
+                return post;
+            }
+            return post;
+        }
     }
 }
