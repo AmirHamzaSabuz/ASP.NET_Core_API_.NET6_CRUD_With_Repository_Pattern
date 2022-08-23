@@ -24,6 +24,13 @@ namespace CRUD.Controllers
             return posts;
         }
 
+        [HttpGet("{id}")]
+        public Post GetById(int id)
+        {
+            var post = _postManager.GetFirstOrDefault(p=>p.Id==id);
+            return post;
+        }
+
         [HttpPost]
         public Post Add(Post post)
         { 
