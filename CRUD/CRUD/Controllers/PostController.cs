@@ -57,5 +57,22 @@ namespace CRUD.Controllers
             }
             return post;
         }
+
+        [HttpDelete]
+        public string Delete(int id)
+        {
+            var post = _postManager.GetById(id);
+            if (post == null)
+            {
+                return "Data not found";
+            }
+            bool isDelete = _postManager.Delete(post);
+            if (isDelete)
+            {
+                return "Post has been deleted";
+            }
+            return "Post delete faild";
+        }
     }
 }
+
