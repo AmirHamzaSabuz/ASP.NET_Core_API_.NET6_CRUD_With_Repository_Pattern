@@ -18,60 +18,64 @@ namespace CRUD.Controllers
         }
 
         [HttpGet]
-        public List<Post> GettAll()
+        public ActionResult<List<Post>> GettAll()
         {
             var posts = _postManager.GetAll().ToList();
-            return posts;
+            return Ok(posts);
         }
 
         [HttpGet("{id}")]
-        public Post GetById(int id)
+        public ActionResult<Post> GetById(int id)
         {
             var post = _postManager.GetById(id);
-            return post;
+            if (post == null)
+            { 
+                return NotFound("Data has not been found");
+            }
+            return Ok(post);
         }
 
         [HttpPost]
-        public Post Add(Post post)
+        public ActionResult<Post> Add(Post post)
         { 
             post.CreatedDate = DateTime.Now;
             bool isSaved = _postManager.Add(post);
             if (isSaved)
             {
-                return post;
+                return Created("", post);
             }
-            return null;
+            return BadRequest("Post save failed");
         }
 
         [HttpPut]
-        public Post Edit(Post post)
+        public ActionResult<Post> Edit(Post post)
         {
             if (post.Id == 0)
             {
-                return null;
+                return BadRequest("Id is missing");
             }
             bool isUpdate = _postManager.Update(post);
             if (isUpdate)
             {
-                return post;
+                return Ok(post);
             }
-            return post;
+            return BadRequest("Post update failed");
         }
 
         [HttpDelete]
-        public string Delete(int id)
+        public ActionResult<string> Delete(int id)
         {
             var post = _postManager.GetById(id);
             if (post == null)
             {
-                return "Data not found";
+                return NotFound("Data not found");
             }
             bool isDelete = _postManager.Delete(post);
             if (isDelete)
             {
-                return "Post has been deleted";
+                return Ok("Post has been deleted");
             }
-            return "Post delete faild";
+            return BadRequest("Post delete faild");
         }
     }
 }
