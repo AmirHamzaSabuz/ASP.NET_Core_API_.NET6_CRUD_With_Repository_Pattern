@@ -24,7 +24,7 @@ namespace CRUD.Controllers
         {
             try
             {
-                var posts = _postManager.GetAll().ToList();
+                var posts = _postManager.GetAll().OrderBy(p=>p.Title).ToList();
                 return CustomResult("Data loaded successfully", posts);
             }
             catch(Exception ex)
@@ -32,6 +32,21 @@ namespace CRUD.Controllers
                 return CustomResult(ex.Message, HttpStatusCode.BadRequest);
             }
            
+        }
+
+        [HttpGet]
+        public IActionResult GettAllDescending()
+        {
+            try
+            {
+                var posts = _postManager.GetAll().OrderByDescending(p => p.Title).ToList();
+                return CustomResult("Data loaded successfully", posts);
+            }
+            catch (Exception ex)
+            {
+                return CustomResult(ex.Message, HttpStatusCode.BadRequest);
+            }
+
         }
 
         [HttpGet("{id}")]
