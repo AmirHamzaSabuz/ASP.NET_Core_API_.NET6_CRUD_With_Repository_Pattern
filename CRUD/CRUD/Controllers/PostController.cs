@@ -20,7 +20,7 @@ namespace CRUD.Controllers
         }
 
         [HttpGet]
-        public IActionResult GettAll()
+        public IActionResult GetAllPOsts()
         {
             try
             {
@@ -34,8 +34,23 @@ namespace CRUD.Controllers
            
         }
 
+        [HttpGet("title")]
+        public IActionResult GetAllPosts(string title)
+        {
+            try
+            {
+                var posts = _postManager.GetAllByTitle(title).ToList();
+                return CustomResult("Data loaded successfully", posts);
+            }
+            catch (Exception ex)
+            {
+                return CustomResult(ex.Message, HttpStatusCode.BadRequest);
+            }
+
+        }
+
         [HttpGet]
-        public IActionResult GettAllDescending()
+        public IActionResult GetAllPostsDescending()
         {
             try
             {
@@ -50,7 +65,7 @@ namespace CRUD.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult GetPostById(int id)
         {
             try
             {
@@ -69,7 +84,7 @@ namespace CRUD.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(Post post)
+        public IActionResult AddPost(Post post)
         {
             try
             {
@@ -89,7 +104,7 @@ namespace CRUD.Controllers
         }
 
         [HttpPut]
-        public IActionResult Edit(Post post)
+        public IActionResult EditPost(Post post)
         {
             try
             {
@@ -111,7 +126,7 @@ namespace CRUD.Controllers
         }   
 
         [HttpDelete]
-        public IActionResult Delete(int id)
+        public IActionResult DeletePost(int id)
         {
             try
             {

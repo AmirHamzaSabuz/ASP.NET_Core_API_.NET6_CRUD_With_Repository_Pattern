@@ -14,6 +14,11 @@ namespace CRUD.Manager
 
         }
 
+        public ICollection<Post> GetAllByTitle(string title)
+        {
+            return Get(p=>p.Title.ToLower()==title.ToLower());
+        }
+
         public Post GetById(int id)
         {
             return GetFirstOrDefault(p => p.Id == id);
