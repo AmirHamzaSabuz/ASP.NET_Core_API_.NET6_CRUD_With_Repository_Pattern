@@ -1,15 +1,17 @@
-﻿using CRUD.Context;
+﻿using CoreApiResponse;
+using CRUD.Context;
 using CRUD.Interfaces.Manager;
 using CRUD.Manager;
 using CRUD.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace CRUD.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class PostController : ControllerBase
+    public class PostController : BaseController
     {
         IPostManager _postManager;
         public PostController(IPostManager postManager)
@@ -23,11 +25,11 @@ namespace CRUD.Controllers
             try
             {
                 var posts = _postManager.GetAll().ToList();
-                return Ok(posts);
+                return CustomResult("Data loaded successfully", posts);
             }
             catch(Exception ex)
             {
-                return BadRequest(ex.Message);
+                return CustomResult(ex.Message, HttpStatusCode.BadRequest);
             }
            
         }
@@ -40,13 +42,13 @@ namespace CRUD.Controllers
                 var post = _postManager.GetById(id);
                 if (post == null)
                 {
-                    return NotFound("Data has not been found");
+                    return CustomResult("Data Not Found", HttpStatusCode.NotFound);
                 }
-                return Ok(post);
+                return CustomResult("Data Found",post);
             }
             catch(Exception ex)
             {
-                return BadRequest(ex.Message);
+                return CustomResult(ex.Message, HttpStatusCode.BadRequest);
             }
             
         }
@@ -60,13 +62,13 @@ namespace CRUD.Controllers
                 bool isSaved = _postManager.Add(post);
                 if (isSaved)
                 {
-                    return Created("", post);
+                    return CustomResult("Post has been created", post);
                 }
-                return BadRequest("Post save failed");
+                return CustomResult("Post save failed", HttpStatusCode.BadRequest);
             }
             catch(Exception ex)
             {
-                return BadRequest(ex.Message);
+                return CustomResult(ex.Message, HttpStatusCode.BadRequest);
             }
             
         }
@@ -78,19 +80,18 @@ namespace CRUD.Controllers
             {
                 if (post.Id == 0)
                 {
-                    return BadRequest("Id is missing");
+                    return CustomResult("Id is missing", HttpStatusCode.BadRequest);
                 }
                 bool isUpdate = _postManager.Update(post);
                 if (isUpdate)
                 {
-                    return Ok(post);
+                    return CustomResult("Post updated done", post);
                 }
-                return BadRequest("Post update failed");
-
+                return CustomResult("Post update failed", HttpStatusCode.BadRequest);               
             }
             catch(Exception ex)
             {
-                return BadRequest(ex.Message);
+                return CustomResult(ex.Message, HttpStatusCode.BadRequest);
             }
         }   
 
@@ -102,18 +103,18 @@ namespace CRUD.Controllers
                 var post = _postManager.GetById(id);
                 if (post == null)
                 {
-                    return NotFound("Data not found");
+                    return CustomResult("Data not found", HttpStatusCode.NotFound);
                 }
                 bool isDelete = _postManager.Delete(post);
                 if (isDelete)
                 {
-                    return Ok("Post has been deleted");
+                    return CustomResult("Post has been deleted");
                 }
-                return BadRequest("Post delete faild");
+                return CustomResult("Post deleted failed", HttpStatusCode.BadRequest);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return CustomResult(ex.Message, HttpStatusCode.BadRequest);
             }
             
         }
