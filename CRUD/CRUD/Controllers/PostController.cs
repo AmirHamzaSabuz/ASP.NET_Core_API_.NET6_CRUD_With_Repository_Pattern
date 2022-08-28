@@ -24,7 +24,7 @@ namespace CRUD.Controllers
         {
             try
             {
-                var posts = _postManager.GetAll().OrderBy(p=>p.Title).ToList();
+                var posts = _postManager.GetAll().OrderBy(p=>p.Title).ThenBy(p=>p.Description).ToList();
                 return CustomResult("Data loaded successfully", posts);
             }
             catch(Exception ex)
@@ -39,7 +39,7 @@ namespace CRUD.Controllers
         {
             try
             {
-                var posts = _postManager.GetAll().OrderByDescending(p => p.Title).ToList();
+                var posts = _postManager.GetAll().OrderByDescending(p => p.Title).ThenByDescending(p=>p.Description).ToList();
                 return CustomResult("Data loaded successfully", posts);
             }
             catch (Exception ex)
