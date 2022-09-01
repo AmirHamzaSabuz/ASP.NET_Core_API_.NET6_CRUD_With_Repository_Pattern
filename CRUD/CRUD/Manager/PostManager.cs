@@ -23,5 +23,10 @@ namespace CRUD.Manager
         {
             return GetFirstOrDefault(p => p.Id == id);
         }
+
+        public ICollection<Post> SearchPost(string text)
+        {
+            return Get(p => p.Title.ToLower().Contains(text.ToLower()));
+        }
     }
 }

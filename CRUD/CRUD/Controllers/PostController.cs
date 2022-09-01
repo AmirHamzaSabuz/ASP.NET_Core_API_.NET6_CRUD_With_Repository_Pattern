@@ -39,7 +39,22 @@ namespace CRUD.Controllers
         {
             try
             {
-                var posts = _postManager.GetAllByTitle(title).ToList();
+                var posts = _postManager.GetAllByTitle(title);
+                return CustomResult("Data loaded successfully", posts);
+            }
+            catch (Exception ex)
+            {
+                return CustomResult(ex.Message, HttpStatusCode.BadRequest);
+            }
+
+        }
+
+        [HttpGet("text")]
+        public IActionResult SearchPost(string text)
+        {
+            try
+            {
+                var posts = _postManager.SearchPost(text);
                 return CustomResult("Data loaded successfully", posts);
             }
             catch (Exception ex)
