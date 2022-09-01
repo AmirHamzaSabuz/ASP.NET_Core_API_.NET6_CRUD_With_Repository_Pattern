@@ -8,5 +8,6 @@ namespace CRUD.Interfaces.Manager
         Post GetById(int id);
         ICollection<Post> GetAllByTitle(string title);
         ICollection<Post> SearchPost(string text);
+        ICollection<Post> GetPosts(int page, int pageSize);
     }
 }

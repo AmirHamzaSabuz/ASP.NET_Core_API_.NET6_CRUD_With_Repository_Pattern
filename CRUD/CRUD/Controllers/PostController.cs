@@ -79,6 +79,21 @@ namespace CRUD.Controllers
 
         }
 
+
+        [HttpGet]
+        public IActionResult GetPosts(int page = 1)
+        {
+            try 
+            {
+                var posts = _postManager.GetPosts(page, 2);
+                return CustomResult("Paging Data for page no "+page, posts.ToList());
+            }
+            catch (Exception ex)
+            {
+                return CustomResult(ex.Message, HttpStatusCode.BadRequest);
+            }
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetPostById(int id)
         {

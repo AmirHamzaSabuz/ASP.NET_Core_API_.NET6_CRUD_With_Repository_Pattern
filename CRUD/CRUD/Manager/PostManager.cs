@@ -24,6 +24,16 @@ namespace CRUD.Manager
             return GetFirstOrDefault(p => p.Id == id);
         }
 
+        public ICollection<Post> GetPosts(int page, int pageSize)
+        {
+            if (page <= 1)
+            {
+                page = 0;
+            }
+            int totalNumber = page * pageSize;
+            return GetAll().Skip(totalNumber).Take(pageSize).ToList();
+        }
+
         public ICollection<Post> SearchPost(string text)
         {
             text = text.ToLower();
