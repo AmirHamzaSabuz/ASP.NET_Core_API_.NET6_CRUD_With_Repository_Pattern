@@ -26,7 +26,8 @@ namespace CRUD.Manager
 
         public ICollection<Post> SearchPost(string text)
         {
-            return Get(p => p.Title.ToLower().Contains(text.ToLower()));
+            text = text.ToLower();
+            return Get(p => p.Title.ToLower().Contains(text)||p.Description.ToLower().Contains(text));
         }
     }
 }
